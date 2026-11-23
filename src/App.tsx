@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { EmptyColumn } from "./EmptyColumn";
 import { board, COLUMNS, move, type Status, type Task } from "./tasks";
 
 const START: Task[] = [
@@ -17,6 +18,7 @@ export function App() {
       {COLUMNS.map((column) => (
         <section key={column}>
           <h2>{LABELS[column]}</h2>
+          {columns[column].length === 0 && <EmptyColumn status={column} />}
           {columns[column].map((task) => (
             <article key={task.id}>
               <strong>{task.title}</strong>
