@@ -48,5 +48,5 @@ export function addDays(date: string, days: number): string {
 /** Tasks not done that are due today or within the next `days` days, soonest first. */
 export function dueSoon(tasks: Task[], today: string, days: number): Task[] {
   const until = addDays(today, days);
-  return tasks.filter((t) => t.status !== "done" && !!t.dueDate && t.dueDate > today && t.dueDate <= until).sort(byDueDate);
+  return tasks.filter((t) => t.status !== "done" && !!t.dueDate && t.dueDate >= today && t.dueDate <= until).sort(byDueDate);
 }
