@@ -37,3 +37,16 @@ export function move(tasks: Task[], id: string, to: Status): Task[] {
 export function overdue(tasks: Task[], today: string): Task[] {
   return tasks.filter((t) => t.status !== "done" && !!t.dueDate && t.dueDate < today);
 }
+
+/** The date `days` days after `date` (both YYYY-MM-DD). */
+export function addDays(date: string, days: number): string {
+  const d = new Date(`${date}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+/** Tasks not done that are due today or within the next `days` days, soonest first. */
+export function dueSoon(tasks: Task[], today: string, days: number): Task[] {
+  const until = addDays(today, days);
+  return tasks.filter((t) => t.status !== "done" && !!t.dueDate && t.dueDate > today && t.dueDate <= until).sort(byDueDate);
+}
